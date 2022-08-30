@@ -1,0 +1,239 @@
+Architecture design
+1. List down requirements(no of users,products info, products suggestion,payments,conformation email etc..)
+2. NFR(Non Functional Req) - Responsive,Security,Cloud Resources,performance, Availability,Connectivity(Car rentals, medical providers etc)
+3. Load balancer and Caching(Whole HTML page) using NGINX
+4. App server - horizontal or vertical scaling - can use micro services
+5. Elastic search for serach based apps(like Book my show)
+6. Redis cache(results of sql query) between server and DB
+7. Select DB(SQl or No SQL) - horizontal or vertical scaling
+8. DB tables - product, Quote,Policy, User
+9. Queue and Async workers for network I/O like conformation email/SMS
+10. Business intelligence using Hadoop and ML
+11. define product interface then implement for other product classes(SOLID)
+12. CDN benefits as content will be distributed in multiple regions improves performance of request
+Consistent Hashing - Same server available over multiple hashing(Clockwise nearby server request will go)
+rate limit implementation - Token bucket algorithm - in distributed system to communicate rate limit with other
+nodes use gossip or distribution cache like Redis(extra service call).
+
+Low Level Design - like parking slot
+
+SSR vs CSR
+make image center always with flexbox
+Design patterns used in project
+render in browser how?
+why nextjs?
+
+HTML5 - web storage, cookies vs token, DOM, statefull(FTP) vs stateless(HTTP) protocal,Reverse testusing tag bdo(Bi-Direactional Overrise)<bdo dir="ltr">
+inline tags - span,input,textArea,a,select,br,button --- block - div,header(h1,h2..),p,ul,ol,li, reset stylesheet using all(initial,unset,revert,inherit)
+CORS(Access-Control-Allow-Origin),
+View port - <meta name="viewport" content="width=device-width, initial-scale=1">
+
+millions of requests-DB RAM is full-what next?horizontal or vertical scaling
+millions of login request - crash system how avoid - rate limit in gateway
+Load balancer - centralized DB
+egg dropping - unsorted - tabulation
+are you part of architect design?
+
+JS - oops,objects creation ,closure, protoype(function constructor), currying(higher order func), bind, ajax, for vs foreach, assign vs create, promise race vs all
+deepcopy,pure function(returns always same result for same inputs),lodash debounce(call once)throlttle(call at interval)
+promise - all apis(polyfil)
+Array methods (polyfil)
+call,bind,apply(polyfil)
+timer with vanilla
+const fruitsCopy = fruits.slice();
+Object.prototype.toString.call(variable) === '[object Array]';
+num % 1 === 0 - Integer(if!=0 then decimal)
+(var that=this)inner function this is global scope, can't access outer scope this
+Splice vs Slice,map vs foreach
+If object keys are integers then printing keys will print in ascending order
+let obj1 = obj2;obj1 = null -- doesn't erase obj2
+Generators,Arrow vs normal function  
+typeof(typeof({name:123})) -- string because typeOf return in string
+Boolean('0') -- true, Boolean(0) -- false, Boolean('') -- false
+Number(false) -- 0, Number(null) -- 0, Number(undefined) -- NaN
+6 - '2' -- 4 -- type conversion
+6 + '2' -- 62 -- no type conversion
+true || alert("not printed") -- Here alert is not printed as evaluation return at first true
+ES6 - Template Literals,Destructuring,Arrow Functions,Promises,Let and Const,Classes,Modules
+var refreshIntervalId = setInterval(fname, 10000);clearInterval(refreshIntervalId);
+
+let URL1 = "https://www.something.com"
+let URL2 = "https://www.something1.com"
+
+const promise1 = axios.get(URL1);
+const promise2 = axios.get(URL2);
+
+Promise.all([promise1, promise2]).then(function(values) {
+  console.log(values);
+});
+
+SOLID priciple, webpack config(entry,output,loaders(css,scss)), malcious attack(SQL injection, Cross site scripting(fix-textContent instead of innerHTML),DDOS, whitesource scan), react caching(React Query)
+
+CSS - mixins, media, position,custom variables,specificity(id>class>type),browser prefix(-webkit,-moz,-mz,-o), 
+display:flex(align-items(row),justify-content(column) - works only if flex)
+pseudo-class apply on the state(:hover,:focus),pseudo-element apply to the specific parts(::first-letter,::before,::after)
+sprite images - merge multiple images into single file and use background-position to place accordingly to improve 
+performance by reducing http requests.
+
+GIT - 
+
+Nodejs - middleware, file handling(readFile(entire file into memory),readStream(chunks)), token,
+To make parameter optional in api(/articles/:year?)
+V8 engine, app.use('/',()) or app.all()-all requests,req.params,override express api(prototype-app.response.sendStatus = function),
+template engine(EJS)- res.render,fs.createWriteStream(in chunks),fs.writeFile(whole file - more time),streams(read,write,duplex,tranform)
+Concurrent requests, multiple system(File,relational, non relational) handling parallel error,debug(launch),
+response interceptor(express-mung),event-driven(eventEmitter,on), error handler at last as middleware,
+uncaught exceptions(process.on),set NODE_ENV=production,common libraries(dotenv,cors,pathfs,lodash,moment)
+event loop browser - Libevent(sending HTTP requests, listen to DOM events) vs node - Libuv(Networking, File System Operations, Listen To System Events)
+
+
+performance - lighthouse tool(measure),production build(black background after bookmark star),shouldComponentUpdate(PureComponent,React.memo,useEffect),brunch or rollup or browserify,Profiler
+
+CICD
+
+204 then 200 -- cross domain first check sends 204 only option then 200 with response
+flux-unidirectional, MVC-bidirectional - for complex user interactions like facebook one user likes, commens others
+and he does it difficul to follow hence flux 
+
+Redux - useSelector, useDispatch,createAsyncThunk for api calls, async calls without middleware(have to pass dispatch to action creators) 
+React - HOC(loader,withRouter), router(Link,Route,history,location), controlled(onchange) and uncontrolled(ref) components, 
+useRef(access DOM,persist between renders),life cycle methods,useCallback(reference-child components),
+useMemo(value),React.memo(shouldComponentUpdate), strictMode(unsafe lifecycle,detect side effects), 
+protectRoutes(private route), code splitting(dynamic import,lazy),reconcilation(virtual DOM, diffing algo),
+render props(pass render logic dynamically),error boundary(componentDidCatch,getDerivedStateFromError(component details)),
+React.forwardRef(props,ref),React.createElement(component, props, ...children),React portal(modal,tooltip)
+component inside component only renders top component to render child component use {props.children}
+React component inheritance, React portal to render outside component tree(Ex: Modal), custom hook - reusable functions(start with use)
+Unit testing - Jest, react testing lib,render,expect,it,getTestById,fireEvent,waitForElement(async),
+jest.mock('axios'),axiosMock.get.mockResolvedValueOnce  
+
+NextJS - Dynamic routes(pages/posts/[id].js),pre-render(static generation - getStaticProps,getStaticPaths)
+SSR(getServerSideProps)
+
+SASS - variables,nesting,@use, mixins(@mixin,@include), inheritance, operators
+Iframe - postMessage, onMessage
+
+JWT - sign,verify 
+
+design patterns - creational-singleton,factories,Builder,prototype,Structual-Adapter,Bridge,Facade,composite, Behavioural-DI,Observer,flux(redux)
+
+SQL vs NoSQL - no schema,fast response,horizontal scaling
+
+refresh html without javascript -- <meta http-equiv="refresh" content="1">
+authentication and authorization -- authentication protocals(openID(JWT),SAML(XML)) - keycloak
+
+AWS - Kubernetes, cluster, Gateway, containerized
+
+Algos:
+matrix diagonal sum
+Longest even length substr such that left sum === right sum
+If in algo asks about count - try to use HashMap
+Binary search tree
+stack with pop O(n)
+priority queue	
+
+attacks,
+websocket,
+other than REST
+http2,
+bind polyfil,
+console on every third iteration,
+distributed denial of service (DDoS) - large volumes of traffic and make server down - solution may be distributed and load balancing
+Web components are similar to creating reusable components in basic HTML
+
+two numbers equal without comparision - use subtraction, XOR returns 0 if equal
+
+redux library implement
+
+circle to semi circle -
+    width:200px;
+    height:100px;
+    background:#F7EC7D;
+    border-radius:150px 150px 0% 0%;
+    transform: rotate(-90deg);
+
+Informational responses (100–199)
+Successful responses (200–299)
+Redirects (300–399)
+Client errors (400–499)
+Server errors (500–599)
+
+console.log(a)
+console.log(b)
+var a = 10;
+let b = 20;
+
+console.log(0.1 + 0.2 === 0.3);
+
+
+const arr = [10, 12, 15, 21];
+for (var i = 0; i < arr.length; i++) {
+setTimeout(function(i) {
+return function() {
+console.log('Output => : ' + i);
+}
+}(i), 2000);
+}
+
+create circle
+
+<div>
+<span>1</span>
+<span>2</span>
+<span>3</span>
+</div>
+
+//inner function this is global scope, can't access outer scope this
+function usesThis(name) {
+    this.myName = name;
+
+    function returnMe() {
+        return this;        
+		}
+
+    return {
+        returnMe : returnMe
+    }
+}
+
+var usesthis = new usesThis('John');
+alert("UsesThis thinks it's called " + usesthis.returnMe().myName);
+
+let obj=1;
+function show(obj1){
+  obj=2;
+  console.log(obj)
+}
+show()
+console.log(obj)
+
+
+function greet() {
+if(true){
+var a = 'hello';//functional scope
+let b = 'world';//block scope
+}
+console.log(a + ' ' + b);
+}
+
+
+function printNumbers(first, second, first) {
+console.log(first, second, first);
+}
+printNumbers(1, 2, 3);
+
+
+const printNumbersArrow = (first, second, first) => {
+console.log(first, second, first);
+}
+printNumbersArrow(1, 2, 3);
+
+
+console.log(1 < 2 < 3);
+console.log(3 > 2 > 1);
+
+(function() {
+  var a = b = 5;
+})();
+
+console.log(b);-- Here b becomes global variable
