@@ -1,0 +1,34 @@
+var Actor = function() {
+  this._lastName = "Tom";
+  this._firstName = "Hanks";
+};
+Actor.prototype.getFullName = function() {
+  return this._lastName + " " + this._firstName;
+};
+
+var actor = new Actor();
+
+function greet(callFullName) {
+  console.log(callFullName());
+}
+
+greet(actor.getFullName);
+
+//bind
+var actor2 = new Actor();
+
+function greet(callFullName) {
+  console.log(callFullName());
+}
+
+greet(actor.getFullName.bind(actor2));
+
+//arrow
+
+var actor3 = new Actor();
+
+function greet(callFullName) {
+  console.log(callFullName());
+}
+
+greet(() => actor.getFullName());
